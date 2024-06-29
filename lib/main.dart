@@ -2,7 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:social_media_clone_riverpod/state/auth/backend/authenticator.dart';
 import 'firebase_options.dart';
+
+import 'dart:developer' as devtools show log;
+
+extension Log on Object {
+  void log() => devtools.log(toString());
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,8 +54,35 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Social media clone'),
+        ),
+        body: TextButton(
+            onPressed: () async {
+              var result = await Authenticator().loginWithGoogle();
+              result.log();
+            },
+            child: Text("login with google")));
   }
 }
 
 // https://riverpod-socialmedia-ilyes.firebaseapp.com/__/auth/handler
+
+/* 
+
+create button wfor google sign in
+on press result autheticator loginWithGoogle;  log the result
+
+write a post about extension log
+
+create auth_state_notifie inside state/auth/notifiers
+
+authstatenotifier extend statenotifier<authstate>
+(add cunstructor Authenticator () ask ChatGpt why ?)
+
+
+
+
+*/
