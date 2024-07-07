@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:social_media_clone_riverpod/state/auth/backend/authenticator.dart';
 import 'firebase_options.dart';
 
@@ -14,7 +15,7 @@ extension Log on Object {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,22 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 58, 62, 183)),
         useMaterial3: true,
       ),
       home: MyHomePage(),
@@ -49,11 +35,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
   Widget build(BuildContext context) {
+    Map gridLine = {
+      "0": "Ilyes",
+      "1": "Nazim",
+      "2": "Amine",
+    };
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -67,22 +63,3 @@ class MyHomePage extends StatelessWidget {
             child: Text("login with google")));
   }
 }
-
-// https://riverpod-socialmedia-ilyes.firebaseapp.com/__/auth/handler
-
-/* 
-
-create button wfor google sign in
-on press result autheticator loginWithGoogle;  log the result
-
-write a post about extension log
-
-create auth_state_notifie inside state/auth/notifiers
-
-authstatenotifier extend statenotifier<authstate>
-(add cunstructor Authenticator () ask ChatGpt why ?)
-
-
-
-
-*/
